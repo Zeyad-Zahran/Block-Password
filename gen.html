@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    /* تنسيق الـ checkbox الافتراضي */
+    input[type="checkbox"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      width: 30px;
+      height: 30px;
+      border: 2px solid lime;
+      border-radius: 5px;
+      background-color: black;
+      position: relative;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    /* تغيير شكل الـ checkbox عند التحديد */
+    input[type="checkbox"]:checked {
+      background-color: lime;
+      border-color: lime;
+    }
+
+    /* إضافة علامة صح عند التحديد */
+    input[type="checkbox"]:checked:before {
+      content: '\2713'; /* الرمز لعلامة الصح */
+      font-size: 20px;
+      color: black;
+      position: absolute;
+      top: 4px;
+      left: 7px;
+    }
+
+    /* تأثير hover للـ checkbox */
+    input[type="checkbox"]:hover {
+      background-color: darkgreen;
+      border-color: darkgreen;
+    }
+
+    /* تنسيق الـ label */
+    label {
+      font-size: 18px;
+      display: inline-block;
+      margin: 10px 0;
+      cursor: pointer;
+      color: lime;
+      text-align: left;
+      transition: color 0.3s;
+    }
+
+    label:hover {
+      color: limegreen; /* تغيير اللون عند المرور بالماوس */
+    }
+
+    input, select, button {
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      background-color: black;
+      color: lime;
+      border: 1px solid lime;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: lime;
+      color: black;
+    }
+
+    #strengthBar {
+      width: 100%;
+      height: 20px;
+      background-color: grey;
+      border: 1px solid lime;
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    #strengthFill {
+      height: 100%;
+      width: 0%;
+      background-color: red;
+      transition: width 0.5s;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background-color: lime;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 80%;
+      box-shadow: 0 0 10px lime;
+      transition: all 0.3s;
+    }
+
+    hr:hover {
+      width: 90%;
+      background-color: limegreen;
+      box-shadow: 0 0 20px limegreen;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 24px;
+      }
+      input, select, button {
+        font-size: 14px;
+      }
+      label {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1><span id="typed"></span></h1>
+
+<div class="container">
+  <select id="length">
+    <option value="8">8 Characters</option>
+    <option value="12">12 Characters</option>
+    <option value="16">16 Characters</option>
+    <option value="20">20 Characters</option>
+  </select>
+
+  <hr>
+
+  <br>
+
+  <label><input type="checkbox" id="lowercase" checked> Include Lowercase</label><br>
+  <label><input type="checkbox" id="uppercase" checked> Include Uppercase</label><br>
+  <label><input type="checkbox" id="numbers" checked> Include Numbers</label><br>
+  <label><input type="checkbox" id="symbols"> Include Symbols</label><br>
+
+  <hr>
+
+  <button onclick="generatePassword()">Generate Password</button>
+
+  <input type="text" id="password" readonly>
+
+  <div id="strengthBar">
+    <div id="strengthFill"></div>
+  </div>
+
+  <button onclick="copyPassword()">Copy Password</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  var typed = new Typed("#typed", {
+    strings: ["Password Generator"],
+    typeSpeed: 80,
+    backSpeed: 50,
+    loop: true
+  });
+
+function generatePassword() {
+  let length = document.getElementById("length").value;
+  let lowercase = document.getElementById("lowercase").checked;
+  let uppercase = document.getElementById("uppercase").checked;
+  let numbers = document.getElementById("numbers").checked;
+  let symbols = document.getElementById("symbols").checked;
+
+  let charset = "";
+  if (lowercase) charset += "abcdefghijklmnopqrstuvwxyz";
+  if (uppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (numbers) charset += "0123456789";
+  if (symbols) charset += "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+  if (charset === "") {
+    alert("Please select at least one option!");
+    return;
+  }
+
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    password += charset.charAt(Math.floor(Math.random() * charset.length));
+  }
+
+  document.getElementById("password").value = password;
+  evaluateStrength(password);
+}
+
+function evaluateStrength(password) {
+  let strengthFill = document.getElementById("strengthFill");
+  let strength = 0;
+
+  if (password.length >= 8) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+  if (strength <= 1) {
+    strengthFill.style.width = "30%";
+    strengthFill.style.backgroundColor = "red";
+  } else if (strength == 2 || strength == 3) {
+    strengthFill.style.width = "70%";
+    strengthFill.style.backgroundColor = "yellow";
+  } else {
+    strengthFill.style.width = "100%";
+    strengthFill.style.backgroundColor = "lime";
+  }
+}
+
+function copyPassword() {
+  let passwordField = document.getElementById("password");
+  passwordField.select();
+  document.execCommand("copy");
+  alert("Password Copied!");
+}
+</script>
+
+</body>
+</html>

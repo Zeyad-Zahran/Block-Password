@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Strength Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    input {
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      background-color: black;
+      color: lime;
+      border: 1px solid lime;
+      border-radius: 5px;
+    }
+
+    #strengthBar {
+      width: 100%;
+      height: 20px;
+      background-color: grey;
+      border: 1px solid lime;
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow: hidden;
+      display: none;
+    }
+
+    #strengthFill {
+      height: 100%;
+      width: 0%;
+      background-color: red;
+      transition: width 0.5s;
+    }
+
+    #strengthText {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 24px;
+      }
+      input {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1><span id="typed"></span></h1>
+
+<div class="container">
+  <input type="password" id="userPassword" placeholder="Type your password..." oninput="checkStrength()">
+
+  <div id="strengthBar">
+    <div id="strengthFill"></div>
+  </div>
+
+  <div id="strengthText"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  var typed = new Typed("#typed", {
+    strings: ["Password Checker"],
+    typeSpeed: 80,
+    backSpeed: 50,
+    loop: true
+  });
+
+function checkStrength() {
+  let password = document.getElementById("userPassword").value;
+  let strengthBar = document.getElementById("strengthBar");
+  let strengthFill = document.getElementById("strengthFill");
+  let strengthText = document.getElementById("strengthText");
+  let strength = 0;
+
+  if (password.length >= 8) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+  strengthBar.style.display = "block";
+
+  if (strength <= 1) {
+    strengthFill.style.width = "30%";
+    strengthFill.style.backgroundColor = "red";
+    strengthText.innerText = "Weak Password";
+    strengthText.style.color = "red";
+  } else if (strength == 2 || strength == 3) {
+    strengthFill.style.width = "70%";
+    strengthFill.style.backgroundColor = "yellow";
+    strengthText.innerText = "Medium Strength";
+    strengthText.style.color = "yellow";
+  } else {
+    strengthFill.style.width = "100%";
+    strengthFill.style.backgroundColor = "lime";
+    strengthText.innerText = "Strong Password";
+    strengthText.style.color = "lime";
+  }
+}
+</script>
+
+</body>
+</html>
