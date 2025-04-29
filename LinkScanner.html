@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Link Scanner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    input, button {
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      background-color: black;
+      color: lime;
+      border: 1px solid lime;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: lime;
+      color: black;
+    }
+
+    .result {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .safe {
+      color: lime;
+    }
+
+    .warning {
+      color: orange;
+    }
+
+    .danger {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h2>Link Scanner</h2>
+  <div class="container">
+    <input type="text" id="urlInput" placeholder="Enter a URL to scan...">
+    <button onclick="scanLink()">Scan</button>
+
+    <div class="result" id="resultBox"></div>
+  </div>
+
+<script>
+function scanLink() {
+  const url = document.getElementById("urlInput").value.trim();
+  const resultBox = document.getElementById("resultBox");
+  resultBox.innerHTML = "";
+
+  if (!url) {
+    resultBox.innerHTML = "<p class='danger'>Please enter a URL.</p>";
+    return;
+  }
+
+  let isHttps = url.startsWith("https://");
+  let isShort = url.length < 25;
+  let domain;
+
+  try {
+    domain = new URL(url).hostname;
+  } catch (e) {
+    resultBox.innerHTML = "<p class='danger'>Invalid URL format.</p>";
+    return;
+  }
+
+  let hasWeirdChars = /[^a-zA-Z0-9.-]/.test(domain); // رموز غريبة
+  let score = 0;
+  if (isHttps) score += 1;
+  if (!isShort) score += 1;
+  if (!hasWeirdChars) score += 1;
+
+  let safetyLevel = "";
+  let className = "";
+
+  if (score === 3) {
+    safetyLevel = "Very Safe";
+    className = "safe";
+  } else if (score === 2) {
+    safetyLevel = "Moderately Safe";
+    className = "warning";
+  } else {
+    safetyLevel = "Unsafe";
+    className = "danger";
+  }
+
+  resultBox.innerHTML = `
+    <p><strong>Domain:</strong> ${domain}</p>
+    <p><strong>Secure (HTTPS):</strong> <span class="${isHttps ? 'safe' : 'danger'}">${isHttps ? 'Yes' : 'No'}</span></p>
+    <p><strong>Short Link:</strong> <span class="${isShort ? 'warning' : 'safe'}">${isShort ? 'Yes (be cautious)' : 'No'}</span></p>
+    <p><strong>Suspicious Characters:</strong> <span class="${!hasWeirdChars ? 'safe' : 'warning'}">${!hasWeirdChars ? 'No' : 'Yes'}</span></p>
+    <hr>
+    <p><strong>Overall Safety:</strong> <span class="${className}">${safetyLevel}</span></p>
+  `;
+}
+</script>
+</body>
+</html>
