@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Internet Speed Analyzer</title>
+  <style>
+    body {
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #00ff00;
+      width: 0;
+      animation: typing 3s steps(30, end) forwards;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 20ch; }
+    }
+    .details {
+      margin-top: 20px;
+      display: grid;
+      gap: 10px;
+      background: rgba(0, 255, 0, 0.05);
+      padding: 20px;
+      border: 1px solid #00ff00;
+      border-radius: 10px;
+      width: 250px;
+      text-align: left;
+    }
+    .label {
+      font-weight: bold;
+    }
+    #gauge {
+      width: 200px;
+      height: 100px;
+      margin-top: 20px;
+      background: #1d1a1a;
+      border-radius: 100px 100px 0 0;
+    }
+    button {
+      background: black;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #00ff00;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Internet Speed Analyzer</h1>
+  <canvas id="gauge"></canvas>
+  <div class="details">
+    <div><span class="label">Download Speed:</span> <span id="download">0 MBps</span></div>
+    <div><span class="label">Ping:</span> <span id="ping">0 ms</span></div>
+    <div><span class="label">Jitter:</span> <span id="jitter">0 ms</span></div>
+    <div><span class="label">ISP:</span> <span id="isp">Loading...</span></div>
+  </div>
+  <button onclick="startTest()">Start Test</button>
+
+  <script>
+    const canvas = document.getElementById('gauge');
+    const ctx = canvas.getContext('2d');
+    const radius = canvas.width / 2;
+
+    function drawGauge(percent) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // background arc
+      ctx.beginPath();
+      ctx.arc(radius, radius, radius - 10, Math.PI, 0, false);
+      ctx.lineWidth = 20;
+      ctx.strokeStyle = '#333';
+      ctx.stroke();
+      // progress arc
+      ctx.beginPath();
+      ctx.arc(radius, radius, radius - 10, Math.PI, Math.PI + Math.PI * percent, false);
+      ctx.strokeStyle = '#00ff00';
+      ctx.stroke();
+      ctx.font = '20px monospace';
+      ctx.fillStyle = '#00ff00';
+      ctx.textAlign = 'center';
+      ctx.fillText((percent * 100).toFixed(0) + '%', radius, radius);
+    }
+
+    drawGauge(0);
+
+    async function startTest() {
+      drawGauge(0);
+      document.getElementById('download').textContent = 'Testing...';
+      document.getElementById('ping').textContent = 'Testing...';
+      document.getElementById('jitter').textContent = 'Testing...';
+      document.getElementById('isp').textContent = 'Loading...';
+
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+      document.getElementById('isp').textContent = data.org;
+
+      const pingStart = performance.now();
+      await fetch('https://speed.cloudflare.com/__down?bytes=100');
+      const pingEnd = performance.now();
+      const ping = Math.round(pingEnd - pingStart);
+      document.getElementById('ping').textContent = ping + ' ms';
+
+      const pings = [];
+      for (let i = 0; i < 5; i++) {
+        const t1 = performance.now();
+        await fetch('https://speed.cloudflare.com/__down?bytes=100');
+        const t2 = performance.now();
+        pings.push(t2 - t1);
+      }
+      const jitter = Math.max(...pings) - Math.min(...pings);
+      document.getElementById('jitter').textContent = jitter.toFixed(2) + ' ms';
+
+      const downloadStart = performance.now();
+      await fetch('https://speed.cloudflare.com/__down?bytes=1000000');
+      const downloadEnd = performance.now();
+      const seconds = (downloadEnd - downloadStart) / 1000;
+      const mbps = (1 / seconds).toFixed(2);
+      document.getElementById('download').textContent = mbps + ' MBps';
+      drawGauge(Math.min(mbps / 50, 1));
+    }
+  </script>
+</body>
+</html>
