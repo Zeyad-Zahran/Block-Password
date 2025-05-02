@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💻 Hacker Chat 💻</title>
+  <style>
+    body { 
+      background: #121212; 
+      color: #00ff00; 
+      font-family: monospace; 
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      padding: 20px;
+      background-color: #2f2f2f;
+      margin: 0;
+    }
+    #usernameBox {
+      text-align: center;
+      margin: 20px 0;
+    }
+    #messages { 
+      border: 1px solid #00ff00; 
+      padding: 10px; 
+      height: 300px; 
+      overflow-y: scroll;
+      margin: 20px auto;
+      width: 80%;
+      background-color: #1a1a1a;
+    }
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #333;
+      color: white;
+    }
+    .myMessage {
+      background-color: #399939;
+      text-align: right;
+      color: black;
+    }
+    .otherMessage {
+      background-color: #444;
+      text-align: left;
+    }
+    input, button { 
+      background: #121212; 
+      color: #00ff00; 
+      border: 1px solid #00ff00; 
+      padding: 10px; 
+      width: 80%;
+      margin: 10px auto;
+      display: block;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      width: 30%;
+      cursor: pointer;
+    }
+    .inputBox {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1> qube chat </h1>
+  <div id="usernameBox">
+    Enter your name: <input type="text" id="username">
+    <button onclick="saveUsername()">OK</button>
+  </div>
+  <div id="messages"></div>
+  <div class="inputBox">
+    <input type="text" id="msgInput" placeholder="Type message...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyD2hZJ0rWOqIIcScQQK9kmMMFEA_h96zWs",
+      authDomain: "queb-bub-chat.firebaseapp.com",
+      databaseURL: "https://queb-bub-chat-default-rtdb.firebaseio.com/",
+      projectId: "queb-bub-chat",
+      storageBucket: "queb-bub-chat.appspot.com",
+      messagingSenderId: "72434646068",
+      appId: "1:72434646068:web:cc48f997937d7d37c3de61",
+      measurementId: "G-GQFJMNP3N6"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    let username = localStorage.getItem("username") || "";
+
+    // Check if username is already saved
+    if (username) {
+      document.getElementById("usernameBox").style.display = "none";
+    }
+
+    function saveUsername() {
+      const input = document.getElementById("username");
+      if (input.value.trim() !== "") {
+        username = input.value.trim();
+        localStorage.setItem("username", username);
+        document.getElementById("usernameBox").style.display = "none";
+      }
+    }
+
+    function sendMessage() {
+      const msgInput = document.getElementById("msgInput");
+      if (username === "") {
+        alert("Please enter your name before sending a message.");
+      } else if (msgInput.value.trim() !== "") {
+        const message = { user: username, text: msgInput.value.trim(), time: Date.now() };
+        db.ref("messages").push(message);
+        msgInput.value = "";
+      } else {
+        alert("Please type a message.");
+      }
+    }
+
+    // Listen for messages
+    db.ref("messages").on("child_added", (snapshot) => {
+      const msg = snapshot.val();
+      const msgDiv = document.createElement("div");
+      msgDiv.classList.add("message");
+      if (msg.user === username) {
+        msgDiv.classList.add("myMessage");
+      } else {
+        msgDiv.classList.add("otherMessage");
+      }
+      msgDiv.textContent = `[${msg.user}] ${msg.text}`;
+      document.getElementById("messages").appendChild(msgDiv);
+      document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+    });
+
+    // Function to clear messages every 30 minutes
+    setInterval(() => {
+      document.getElementById("messages").innerHTML = "";
+    }, 30 * 60 * 1000); // 30 minutes in milliseconds
+  </script>
+</body>
+</html>
