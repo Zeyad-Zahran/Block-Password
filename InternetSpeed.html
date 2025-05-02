@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Internet Speed Analyzer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       background: black;
@@ -14,54 +15,85 @@
       justify-content: center;
       min-height: 100vh;
       margin: 0;
+      padding: 20px;
     }
+  
     h1 {
-      font-size: 2rem;
+      font-size: clamp(1.2rem, 4vw, 2rem);
       white-space: nowrap;
       overflow: hidden;
       border-right: 2px solid #00ff00;
       width: 0;
       animation: typing 3s steps(30, end) forwards;
+      margin-bottom: 30px;
+      max-width: 90%;
     }
+  
     @keyframes typing {
       from { width: 0; }
       to { width: 20ch; }
     }
+  
     .details {
-      margin-top: 20px;
-      display: grid;
+      display: flex;
+      flex-direction: column;
       gap: 10px;
       background: rgba(0, 255, 0, 0.05);
-      padding: 20px;
+      padding: 5vw;
       border: 1px solid #00ff00;
       border-radius: 10px;
-      width: 250px;
+      width: 90%;
+      max-width: 280px;
       text-align: left;
+      margin-top: 20px;
     }
+  
     .label {
       font-weight: bold;
     }
+  
     #gauge {
-      width: 200px;
-      height: 100px;
+      width: 80vw;
+      max-width: 250px;
+      aspect-ratio: 2 / 1;
       margin-top: 20px;
       background: #1d1a1a;
-      border-radius: 100px 100px 0 0;
+      border-radius: 125px 125px 0 0;
+      display: block;
     }
+  
     button {
       background: black;
       border: 1px solid #00ff00;
       color: #00ff00;
-      padding: 10px 20px;
+      padding: 12px 30px;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 25px;
+      font-size: 1rem;
+      border-radius: 5px;
       transition: 0.3s;
+      width: 90%;
+      max-width: 250px;
     }
+  
     button:hover {
       background: #00ff00;
       color: black;
     }
+  
+    canvas {
+      background: #1d1a1a;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00ff00;
+    }
+  
+    #download, #ping, #jitter, #isp {
+      color: #00ff00;
+      font-size: 1.2rem;
+    }
+
   </style>
+  
 </head>
 <body>
   <h1>Internet Speed Analyzer</h1>
@@ -83,13 +115,13 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       // background arc
       ctx.beginPath();
-      ctx.arc(radius, radius, radius - 10, Math.PI, 0, false);
+      ctx.arc(radius, radius, radius - 15, Math.PI, 0, false);
       ctx.lineWidth = 20;
       ctx.strokeStyle = '#333';
       ctx.stroke();
       // progress arc
       ctx.beginPath();
-      ctx.arc(radius, radius, radius - 10, Math.PI, Math.PI + Math.PI * percent, false);
+      ctx.arc(radius, radius, radius - 15, Math.PI, Math.PI + Math.PI * percent, false);
       ctx.strokeStyle = '#00ff00';
       ctx.stroke();
       ctx.font = '20px monospace';
