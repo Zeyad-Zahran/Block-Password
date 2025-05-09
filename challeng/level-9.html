@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 9 - Final Equation Challenge</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #111;
+      color: #00ff00;
+      text-align: center;
+      padding: 40px;
+      font-size: 20px;
+    }
+    h1 {
+      color: #00ff00;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border: 2px solid #00ff00;
+      background-color: #111;
+      color: #00ff00;
+      font-size: 20px;
+      width: 250px;
+    }
+    button {
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #00ff00;
+      color: #111;
+    }
+    .hidden {
+      display: none;
+    }
+    .info {
+      font-size: 14px;
+      color: #aaaaaa;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1> Level 9</h1>
+
+  <pre style="font-size: 18px; color: #aaaaaa;">
+aUAr9j6agDvzThhUHjWd4mOfRaC/4kw36
+jg4HLZi0qgEWKUBcY/YZN6x59DyKM+DHv3oJGy07yLNHTRXdJYAlkm8F
+kHNTr6o1LnNSOlk5gR3q0Za0s8Vs5mYfE+CDGz59f4ENFtg4jm7LVdmRxCbLrNgPpHq
+KdI3v0gAk8CSuEyyUW4rkUT+610K2LLGCyuaPKe4O2RJ/OCystNCxjf0gfLlbcw0s8Q2QoeOA17z
+k/VmQ9vB9pKtVFXTAC75Ntmtl8u5Cu1aI5ePJHldS1O9CVMQKXTaegBELchNqybT9NmM0Ui0R3RXRAwhbOnuXZMa
+  </pre>
+
+  <input type="number" id="answer" placeholder="Enter result">
+  <button onclick="checkAnswer()">Submit</button>
+
+  <div id="success" class="hidden">
+    <h2>✔ Correct! Level 9 Complete</h2>
+    <br><br>
+    <a href="level-10.html">
+      <button>➡️ Proceed to Final Flag </button>
+    </a>
+  </div>
+
+  <div id="error" class="hidden">
+    <p style="color: red;">❌ Invalid input. Retry.</p>
+  </div>
+
+  <div class="info">
+    <p>⚠️ if you have a proplem delet the speases</p>
+  </div>
+
+  <script>
+    function checkAnswer() {
+      const input = document.getElementById("answer").value;
+      const success = document.getElementById("success");
+      const error = document.getElementById("error");
+
+      if (parseInt(input) === 867) {
+        success.classList.remove("hidden");
+        error.classList.add("hidden");
+      } else {
+        success.classList.add("hidden");
+        error.classList.remove("hidden");
+      }
+    }
+  </script>
+
+</body>
+</html>

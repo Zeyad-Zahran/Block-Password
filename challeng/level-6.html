@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hack The Mind - Level 6</title>
+  <style>
+    body {
+      background-color: black;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    .terminal-box {
+      border: 2px solid #33ff33;
+      padding: 1rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    input[type="text"] {
+      background-color: black;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem;
+      width: 100%;
+    }
+    button {
+      background-color: #000;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .hidden-box {
+      display: none;
+      margin-top: 2rem;
+    }
+    .hidden-input {
+      display: none;
+      margin-top: 1rem;
+    }
+    .hint {
+      font-size: 14px;
+      color: #ffcc00;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-box">
+    <h2>Level 6: -....- .- -.-. ....- ....- - .... .- .- .- .-.. .--. .-. --- ...- . .-. - .-.-.-</h2>
+    <p>- .... . / -.-. --- -. ... --- .-.. . / .- .-.. -- --- ... - / .... .- -.-. -.- -.-. --- -.-. .-.-.-</p>
+    <p>// -- --- .-. ... . / .... .- -.-. -.- -.-. -... .-. - .-.-.- / .... --- .-- / - .... .- - / -.-. --- -. ... --- .-.. / .-- --- .-. -.- / -.. . -.-. .. .--. .... . .-. --..-- / .-.. --- --. .. -.-. -.- -.- .-.-.-</p>
+    <p>🚨 .-.. --- --. .. -.-. -.- -.- .-.-.-</p>
+
+    <!--
+      🔐 Comment Clue:
+      -.-. --- -.. . -.-. .-.. -.-. ..- / -.-. --- -. ... --- .-.. .-.-.- / -.-. .- .-.. -.-. .- .-.. .-.-.-
+    -->
+
+    <input type="text" id="hiddenInput" class="hidden-input" placeholder="Enter the password...">
+    <button onclick="checkLevel6()">Submit</button>
+
+    <div id="success" class="hidden-box">
+      <h3>✔ Level 6 Complete</h3>
+      <p><a href="level7.html" style="color: #33ff33; text-decoration: underline;">Proceed to Level 7</a></p>
+    </div>
+
+    <div id="hint-box" class="hint" style="display:none;">
+      <p>🧩 Clue: Try looking at the console for some hints!</p>
+      <p>📡 Hint 2: There is more to the password than just letters, think about logic!</p>
+    </div>
+  </div>
+
+  <script>
+    // 📡 Morse Message in Console:
+    console.log("-....- .- -.-. ....- ....- - .... .- .- .- .-.. .--. .-. --- ...- . .-. - .-.-.-"); // password codeclcu
+    console.log("-.-. --- -.. . -.-. .-.. -.-. ..- / -.-. --- -. ... --- .-.. .-.-.-"); // password codeclcu
+
+    function normalize(text) {
+      return text.toLowerCase().replace(/[^a-z0-9! ]/g, '').trim();
+    }
+
+    function checkLevel6() {
+      const input = document.getElementById("hiddenInput").value;
+      const correct = normalize("codeclcu");
+      const user = normalize(input);
+
+      if (user === correct) {
+        document.getElementById("success").style.display = "block";
+      } else {
+        alert("❌ Wrong password. Check console + decode clues.");
+        // Show hint after wrong attempt
+        document.getElementById("hint-box").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>

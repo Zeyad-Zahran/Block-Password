@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 8 - Hidden Cipher</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      padding: 2rem;
+      text-align: center;
+    }
+    input[type="text"] {
+      background: black;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      padding: 0.5rem;
+      width: 60%;
+      margin-top: 1rem;
+    }
+    button {
+      background: black;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h2>Level 8: bj5HQwo/awDFsG/9Xg/rXW94NCcIdIMvi2TIt1hSN94=</h2>
+  <p>a8J27XnBuM09555LllGcKuWIjA5pWYi8C0/KspAmAJLws6IgMcbDVymjc7deWgsM</p>
+  <pre>qSsSXP1CZ+nl3gqqYIFiCjKbY47Cqdo6TS359wWDnv8LHzzNfIzQXQXvSjd1r6rV</pre>
+
+  <input type="text" id="userInput" placeholder="Enter the decrypted password here">
+  <button onclick="checkPassword()">Submit</button>
+
+  <div id="downloadSection" class="hidden">
+    <p>✔ Password correct. Run the file below and go to final level:</p>
+    
+      <button download><a href="secret-file.txt" download>Download File</a></button>
+    </a>
+    <br>
+    <button onclick="goToNextLevel()">Proceed to Final Level</button>
+  </div>
+
+  <script>
+    console.log("ZYxPOwTKUgGEkEJAVjtTnQ==")
+    console.log("QDTUS4yk2flVWleqcrHVuQ==")
+    console.log("SLUQkwdpH35DQ9JeXfiILw==")
+    console.log("geXmx4wKv1VQFfXA5AiiuQ==")
+    console.log("IiF08T8cSkb2C7J+BA9Xog==")
+    function checkPassword() {
+      const input = document.getElementById('userInput').value.trim();
+      const correctPassword = 'zeyad';
+
+      if (input === correctPassword) {
+        document.getElementById('downloadSection').style.display = 'block';
+      } else {
+        alert('❌ Incorrect password. Try again.');
+      }
+    }
+
+    function goToNextLevel() {
+      window.location.href = 'level-9.html';
+    }
+  </script>
+</body>
+</html>

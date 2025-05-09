@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hack The Mind - Level 5</title>
+  <style>
+    body {
+      background-color: black;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    .terminal-box {
+      border: 2px solid #33ff33;
+      padding: 1rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    input[type="text"] {
+      background-color: black;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem;
+      width: 100%;
+    }
+    button {
+      background-color: #000;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .hidden-box {
+      display: none;
+      margin-top: 2rem;
+    }
+    .hidden-input {
+      display: none;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-box">
+    <h2>Level 5: .... .- ...- . / -.-- --- ..- / .-.. --- ...- . -.. / .--. ..- --.. --.. .-.. . ... ..--..</h2>
+    <p>.-. . .- -.. / - .... . / -.-. --- -- -- . -. - ... / ..-. --- .-. / -.-. .-.. ..- . ... .-.-.-</p>
+    <p>// .... .. -. - ---... / .... --- ...- . .-. / --- ...- . .-. / - .... . / -.. .. ... .--. .-.. .- -.-- -.-. --- -.. . / .- -. -.. / ..-. .. -. -.. / - .... . / .. -. .--. ..- - / - .... .-. . . .-.-.-</p>
+
+    <!--
+      🔐 Comment Clue:
+      .-.. --- ...- . -.-. --- -.. . / .-- .. - .... / - .... .- - /.. -. ...- .. ... .. -... .-.. . / - .... .. -. --. ... / .- .-. . / .... .. -.. -.. . -. / .. -. / .--. .-.. .- .. -. / ... .. --. .... - .-.-.- / .-.. --- --. .. -.-. -.- . ...- .- .-.. ..- . ...- .-.-.-
+    -->
+
+    <input type="text" id="hiddenInput" class="hidden-input" placeholder="Enter password here...">
+    <button onclick="checkLevel5()">Submit</button>
+
+    <div id="success" class="hidden-box">
+      <h3>✔ Level 5 Complete</h3>
+      <p><a href="level-6.html" style="color: #33ff33; text-decoration: underline;">Proceed to Level 6</a></p>
+    </div>
+  </div>
+
+  <script>
+    console.log(".--. .- ... ... .-- --- .-. -.. / - .... .-. . .");
+    console.log(".--. .- ... ... .-- --- .-. -.. / .-.. --- ...- . -.-. --- -..");
+
+    function normalize(text) {
+      return text.toLowerCase().replace(/[^a-z0-9! ]/g, '').trim();
+    }
+
+    function checkLevel5() {
+      const input = document.getElementById("hiddenInput").value;
+      const correct = normalize("lovecodeThree");
+      const user = normalize(input);
+
+      if (user === correct) {
+        document.getElementById("success").style.display = "block";
+      } else {
+        alert("❌ Incorrect. Look harder, decode better.");
+      }
+    }
+  </script>
+</body>
+</html>

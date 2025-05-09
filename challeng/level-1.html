@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hack The Mind - Level 1</title>
+  <style>
+    body {
+      background-color: black;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    .terminal-box {
+      border: 2px solid #33ff33;
+      padding: 1rem;
+      max-width: 500px;
+      margin: auto;
+    }
+    input[type="text"] {
+      background-color: black;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem;
+      width: 100%;
+    }
+    button {
+      background-color: #000;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .hidden-box {
+      display: none;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-box">
+    <h2>Level 1: Enter the Password</h2>
+    <p>Access to next level is protected.</p>
+    <input type="text" id="password" placeholder="Enter password here...">
+    <button onclick="checkPassword()">Submit</button>
+    <div id="success" class="hidden-box">
+      <h3>✔ Access Granted</h3>
+      <p><a href="level-2.html" style="color: #33ff33; text-decoration: underline;">Continue to Level 2</a></p>
+    </div>
+  </div>
+
+  <!-- password 1: brainpower123 -->
+  <!-- password 2: decode42 -->
+
+  <script>
+    function checkPassword() {
+      const input = document.getElementById("password").value.trim();
+      if (input === "brainpower123") {
+        document.getElementById("success").style.display = "block";
+      } else {
+        alert("Access Denied. Try Again.");
+      }
+    }
+  </script>
+</body>
+</html>

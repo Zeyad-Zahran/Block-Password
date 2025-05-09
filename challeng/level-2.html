@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hack The Mind - Level 2</title>
+  <style>
+    body {
+      background-color: black;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    .terminal-box {
+      border: 2px solid #33ff33;
+      padding: 1rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    input[type="text"] {
+      background-color: black;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem;
+      width: 100%;
+    }
+    button {
+      background-color: #000;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .hidden-box {
+      display: none;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-box">
+    <h2>Level 2: Decode the Clue</h2>
+    <p>You intercepted this encoded message:</p>
+    <pre>ZG9jdW1lbnQucXVlcnlTZWxlY3RvcignaW<br>5wdXRbZGF0YS1rZXknXScpLnZhbHVlID0gJ2RlY29kZTQyJzs=</pre>
+    <p>Use your brain, not just code. Find the hidden input and enter the decoded password.</p>
+
+    <!-- Hint: Base64 decode it -->
+
+    <input type="text" id="hiddenInput" data-key="level2-pass" placeholder="Enter password..." style="display:none">
+    <button onclick="checkLevel2()">Submit</button>
+
+    <div id="success" class="hidden-box">
+      <h3>✔ Level 2 Passed</h3>
+      <p><a href="level-3.html" style="color: #33ff33; text-decoration: underline;">Proceed to Level 3</a></p>
+    </div>
+  </div>
+
+  <!-- password for level 2: decode42 -->
+
+  <script>
+    function checkLevel2() {
+      const input = document.querySelector('input[data-key]').value.trim();
+      if (input === "decode42") {
+        document.getElementById("success").style.display = "block";
+      } else {
+        alert("Wrong key. Try again.");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hack The Mind - Level 3</title>
+  <style>
+    body {
+      background-color: black;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    .terminal-box {
+      border: 2px solid #33ff33;
+      padding: 1rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    input[type="text"] {
+      background-color: black;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem;
+      width: 100%;
+    }
+    button {
+      background-color: #000;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .hidden-box {
+      display: none;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-box">
+    <h2>Level 3</h2>
+    <p>The page looks empty, but the Y29uc29sZQ== has something to say...</p>
+    <!-- => Z28gdG8gdGhlIGNvbnNvbGUgIQ== <= -->
+
+    <input type="text" id="level3pass" placeholder="Enter the key from console...">
+    <button onclick="checkLevel3()">Submit</button>
+
+    <div id="success" class="hidden-box">
+      <h3>✔ Level 3 Complete</h3>
+      <p><a href="level-4.html" style="color: #33ff33; text-decoration: underline;">Onward to Level 4</a></p>
+    </div>
+  </div>
+
+  <script>
+    console.log("// 🔓 HINT: The key is: logicMaster!2025");
+
+    function checkLevel3() {
+      const input = document.getElementById("level3pass").value.trim();
+      if (input === "logicMaster!2025") {
+        document.getElementById("success").style.display = "block";
+      } else {
+        alert("Incorrect. The console is your friend.");
+      }
+    }
+  </script>
+</body>
+</html>

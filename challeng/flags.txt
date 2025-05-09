@@ -1,0 +1,19 @@
+----level 1 => brainpower123
+
+----level 2 => open Dev Tools => input display:none > block > decode42
+
+----level 3 => go to console => logicMaster!2025
+
+----level 4 => open Dev Tools => input display:none > block > logicMaster!2025
+
+----level 5 => open Dev Tools => input display:none > block > lovecodeThree
+
+----level 6 => open Dev Tools => input display:none > block > codeclcu
+
+----level 7 => open Dev Tools => input display:none > block > go to the secret code
+
+----level 8 => zeyad 
+
+----level 9 => 867
+
+----final flag => ksm israel

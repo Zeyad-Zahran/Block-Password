@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hack The Mind - Level 7</title>
+  <style>
+    body {
+      background-color: black;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    .terminal-box {
+      border: 2px solid #33ff33;
+      padding: 1rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    input[type="text"] {
+      background-color: black;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem;
+      width: 100%;
+    }
+    button {
+      background-color: #000;
+      color: #33ff33;
+      border: 1px solid #33ff33;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .hidden-box {
+      display: none;
+      margin-top: 2rem;
+    }
+    .hidden-input {
+      display: none;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-box">
+    <h2>Level 7: iHn9nFzCwOGglJd+uJ8F1DqpnMn5YmZTg+S0c<br>NGUtDBOUTTxof+PH82CLqfyhqAEB/Dbn4A/JyD<br>4dQxCYm3/Bw==</h2>
+    <p>🚨 M6XZwyp1Sca64dp2KeOcZ/zockMSh0r8Pq<br>xDr5ggCkQa6xjL4uCcjsRa65iPagWsbdqBit9IfMA5/SvDv8vYr<br>XwDLDRN3HHMuvMn4qcuacoOLS0g8TDPJkCvsaVEW<br>7Gg2k0avzQFaMvU<br>PKH8skNyHw==</p>
+    <p>📌 Z28gdG8gdGhlIHNlY3JldCBjb2Rl</p>
+    <p>🔐 Uf9bE7FNBnwWmlp7KzfVz9nBLDJdYLYJ3jXy3ahhhYI=</p>
+    
+    <input type="text" id="hiddenInput" class="hidden-input" placeholder="Enter the decoded password...">
+    <button onclick="checkLevel7()">Submit</button>
+
+    <div id="success" class="hidden-box">
+      <h3>✔ Level 7 Complete</h3>
+      <p><a href="level-8.html" style="color: #33ff33; text-decoration: underline;">Proceed to Level 8</a></p>
+    </div>
+  </div>
+
+  <script>
+
+    console.log("JoOu7DwYm/AhwZAZ1c5LNjFACakVHqhj0KWlROSYkNQ=")
+    function normalize(text) {
+      return text.toLowerCase().replace(/[^a-z0-9! ]/g, '').trim();
+    }
+
+    function checkLevel7() {
+      const input = document.getElementById("hiddenInput").value;
+      const correct = normalize("go to the secret code");
+      const user = normalize(input);
+
+      if (user === correct) {
+        document.getElementById("success").style.display = "block";
+      } else {
+        alert("❌ Wrong password. Check the clues and decode the message.");
+      }
+    }
+  </script>
+</body>
+</html>
